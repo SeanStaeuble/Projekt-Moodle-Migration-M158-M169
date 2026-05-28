@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Moodle 4.4 herunterladen und entpacken
-RUN wget -q "https://download.moodle.org/download.php/direct/stable404/moodle-latest-404.tgz" \
+RUN wget -q ""https://download.moodle.org/download.php/direct/stable405/moodle-latest-405.tgz" \
         -O /tmp/moodle.tgz \
     && tar -xf /tmp/moodle.tgz -C /var/www/html/ \
     && rm /tmp/moodle.tgz \
