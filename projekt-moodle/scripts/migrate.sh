@@ -148,8 +148,8 @@ sleep 30
 # Dump importieren
 echo "Importiere Dump in neuen Container..."
 docker exec -i moodle_db mariadb \
-    -u"$NEUE_DB_USER" \
-    -p"$NEUE_DB_PASS" \
+    -u root \
+    -p"$NEUE_DB_ROOT" \
     "$NEUE_DB" < "$DUMP_DATEI"
 
 echo -e "${GRUEN}Dump importiert.${NC}"
