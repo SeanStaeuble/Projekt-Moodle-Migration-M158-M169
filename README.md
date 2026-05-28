@@ -51,7 +51,7 @@ sudo usermod -aG docker $USER
 ## Repository klonen
 
 ```bash
-git clone https://github.com/<euer-repo>/projekt-moodle.git
+git clone https://github.com/SeanStaeuble/Projekt-Moodle-Migration-M158-M169/tree/main
 cd projekt-moodle
 chmod +x scripts/migrate.sh
 ```
