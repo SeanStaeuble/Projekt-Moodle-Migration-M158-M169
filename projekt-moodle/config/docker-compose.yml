@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+
+  # Datenbank Container
+  moodle_db:
+    image: mariadb:10.11
+    container_name: moodle_db
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
+      MYSQL_DATABASE:      ${DB_NAME}
+      MYSQL_USER:          ${DB_USER}
+      MYSQL_PASSWORD:      ${DB_PASS}
+    volumes:
+      - db_daten:/var/lib/mysql
+    networks:
+      - moodle_netz
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+
+  # Neue Moodle Instanz
+  moodle_neu:
+    build:
+      context: ../setup
+    container_name: moodle_neu
+    restart: unless-stopped
+    depends_on:
+      moodle_db:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      DB_HOST:    moodle_db
+      DB_NAME:    ${DB_NAME}
+      DB_USER:    ${DB_USER}
+      DB_PASS:    ${DB_PASS}
+      MOODLE_URL: http://localhost
+    volumes:
+      - moodle_daten:/var/moodledata
+    ports:
+      - "${PORT_NEU:-80}:80"
+    networks:
+      - moodle_netz
+
+volumes:
+  db_daten:
+  moodle_daten:
+
+networks:
+  moodle_netz:
+    driver: bridge

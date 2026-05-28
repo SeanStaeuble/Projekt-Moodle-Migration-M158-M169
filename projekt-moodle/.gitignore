@@ -1,0 +1,10 @@
+# Sensible Daten – niemals committen!
+config/.env
+scripts/dump_alt.sql
+scripts/dump_migriert.sql
+
+# Temporäre Dateien
+*.tmp
+*.log
+__pycache__/
+.DS_Store
